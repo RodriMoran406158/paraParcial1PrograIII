@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alta de Piloto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style> #containerErrors {
+            display: none;
+            background-color: #cecdcd;
+            border: 1px solid #ff2323;
+            color:red;
+            padding: 15px;
+    }</style>
+    </head>
+
+<body>
+    <div class="container mt-5 w-25">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title text-center">Alta de piloto</h5>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <div class="d-flex flex-column">
+                                <label for="inputName">Nombre</label>
+                                <input type="text" class="form-control" id="inputName" name="inputName">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex flex-column">
+                                <label for="inputLastName">Apellido</label>
+                                <input type="text" class="form-control" id="inputLastName" name="inputLastName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <div class="d-flex flex-column">
+                                <label for="inputHours">Cant. horas vuelo</label>
+                                <input type="text" class="form-control" id="inputHours" name="inputHours">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex flex-column">
+                                <label for="radioType">Tipo vuelo</label>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radioType" id="cabotaje">
+                                    <label class="form-check-label" for="cabotaje">Cabotaje</label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="radioType" id="internacional">
+                                    <label class="form-check-label" for="internacional">Internacional</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-12">
+                            <label class="form-check-label" for="nacionality">Nacionalidad</label>
+                            <select class="form-select" aria-label="Default select example" name="nacionality" id="nacionality">
+                                <option selected>Seleccionar</option>
+                                <option value="1">Argentina</option>
+                                <option value="2">Uruguay</option>
+                                <option value="3">Chile</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                    <div class="row mt-3 text-center">
+                        <div class="col-12">
+                            <button type="reset" class="btn btn-outline-primary text-primary">Volver</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="error" id="containerErrors">
+                <h4 class="text-dark">Errores en el formulario</h4>
+                <ul id="erroresCampo"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function () {
+            jQuery.validator.addMethod("selectcheck",function(value, element){
+                return value !== 'Seleccionar';
+            }, "Por favor selecciona un país.");
+            $("form").validate({
+                errorContainer: "#containerErrors",
+                errorLabelContainer: "#erroresCampo",
+                wrapper: "li",
+                rules: {
+                    inputName: {
+                        required: true,
+                        maxlength: 30
+                    },
+                    inputLastName: {
+                        required: true,
+                        maxlength: 20
+                    },
+                    inputHours: {
+                        required: true,
+                        digits: true,
+                        min: 50
+                    },
+                    radioType: {
+                        required: true
+                    },
+                    nacionality: {                        
+                        selectcheck: true
+                    }
+                },
+                messages: {
+                    inputName:{
+                        required:"Ingrese un nombre",
+                        maxlength:"El nombre debe tener un máximo de 30 caracteres"
+                    },
+                    inputLastName:{
+                        required:"Ingrese un apellido",
+                        maxlength:"El apellido debe tener un máximo de 20 caracteres"
+                    },
+                    inputHours:{
+                        required:"Ingrese la cantidad de horas",
+                        digits:"Ingrese un numero como cantidad de horas",
+                        min:"Tiene que ser un minimo de 50 horas"
+                    },
+                    radioType: {
+                        required:"Debe elegir un tipo de vuelo"
+                    },                    
+                },
+                submitHandler: function (form) {
+                    
+                    alert("exito")
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+  <script>
+    var paises = [{ nombre: "Argentina", provincias: ["Buenos Aires", "Córdoba", "Santa Fe", "Mendoza"] },
+    { nombre: "Chile", provincias: ["Santiago", "Valparaíso", "Biobío", "Maule"] },
+    { nombre: "Uruguay", provincias: ["Montevideo", "Salto", "San José", "Cerro Largo"] },
+    { nombre: "Paraguay", provincias: ["Asunción", "Concepción", "San Pedro", "Amambay"] }
+    ]
+
+    function llenarSelect() {
+      var select = $("#selectPais");
+      $.each(paises, function (index, pais) {
+        select.append($("<option>", {
+          value: pais.nombre,
+          text: pais.nombre
+        }))
+      })
+    }
+
+    function llenarProvincias() {
+      var selectPais = $("#selectPais");
+      var selectProvincia = $("#selectProvincia");
+      var paisSeleccionado = selectPais.val();
+
+      selectProvincia.empty();
+
+      $.each(paises, function (index, pais) {
+        if (pais.nombre === paisSeleccionado) {
+          $.each(pais.provincias, function (index, provincia) {
+            selectProvincia.append($("<option>", {
+              value: provincia,
+              text: provincia
+            }))
+          })
+
+        }
+      })
+    }
+
+    $(document).ready(function () {
+      llenarSelect();
+      llenarProvincias();
+
+      $("#form-register").validate(
+        {
+          rules: {
+            inputName: {
+              required: true,
+              maxlength: 100
+            },
+            inputLastName: {
+              required: true,
+              maxlength: 100,
+              minlength: 2
+            },
+            radioEducacion: "required",
+            selectPais: "required",
+            selectProvincia: "required"
+          },
+          messages: {
+            inputName: {
+              required: "Este campo es requerido.",
+              maxlength: jQuery.validator.format("Debe contener un máximo de {0} caracteres.")
+            },
+            inputLastName: {
+              required: "Este campo es requerido.",
+              maxlength: jQuery.validator.format("Debe contener un máximo de {0} caracteres."),
+              minlength: jQuery.validator.format("Debe contener un mínimo de {0} caracteres.")
+            },
+            radioEducacion: "Por favor, seleccione su nivel de educación",
+            selectPais: "Por favor, seleccione su pais",
+            selectProvincia: "Por favor, seleccione su provincia"
+          },
+            submitHandler: function (form) {
+            const name = $("#inputName");
+            const lastName = $("#inputLastName");          
+            const levelEducation = $("input[name='radioEducation']:checked").val();
+            const pais = $("#selectPais").val();
+            const provincia = $("#selectProvincia").val();
+            const observaciones = $("#observaciones").val();
+            localStorage.setItem("name", name.val());
+            localStorage.setItem("lastName",lastName.val())
+            localStorage.setItem("levelEducation", levelEducation);
+            localStorage.setItem("pais",pais);
+            localStorage.setItem("provincia",provincia);
+            localStorage.setItem("observaciones",observaciones);
+            window.location.href = "cards.html";
+          }
+        }
+      );
+    })
+  </script>
+</head>
+
+<body>
+  <div class="container border border-primary mt-4">
+    <form class="p-5" action="cards.html" method="get" id="form-register" novalidate>
+      <fieldset>
+        <legend>Formulario</legend>
+        <div>
+          <div class="mb-3 col-6 ">
+            <label for="inputName" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="inputName" name="inputName">
+          </div>
+          <div class="mb-3 col-6">
+            <label for="inputLastName" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="inputLastName" name="inputLastName">
+          </div>
+
+          <hr class="mt-4">
+
+        </div>
+
+        <legend>Nivel educativo</legend>
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioEducation" value="Primario" id="radioPrimario">
+            <label class="form-check-label" for="radioPrimario">
+              Primario
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioEducation" value="Secundario" id="radioSecundario">
+            <label class="form-check-label" for="radioSecundario">
+              Secundario
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioEducation" value="Terciario" id="radioTerciario">
+            <label class="form-check-label" for="radioTerciario">
+              Terciario
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="radioEducation" value="Universitario" id="radioUniversitario">
+            <label class="form-check-label" for="radioUniversitario">
+              Universitario
+            </label>
+          </div>
+
+          <hr class="mt-4">
+
+          <div class="d-flex mt-4">
+            <div class="row w-100">
+              <div class="col-6">
+                <legend class="p-2">Pais</legend>
+                <select class="form-select" name="selectPais" id="selectPais" onchange="llenarProvincias()">
+                </select>
+                <span class="error-message d-none" id="errorPais">Por favor, seleccione el país!</span>
+              </div>
+              <div class="col-6">
+                <legend class="p-2">Provincia</legend>
+                <select class="form-select" name="selectProvincia" id="selectProvincia">
+                </select>
+                <span class="error-message d-none" id="errorProvincia">Por favor, seleccione la provincia!</span>
+              </div>
+            </div>
+          </div>
+
+          <hr class="mt-4">
+
+          <div class="col-12 mt-4">
+            <label for="observaciones" class="form-label">Observaciones (opcional)</label>
+            <textarea class="form-control" id="observaciones" name="observaciones" rows="4"></textarea>
+          </div>
+          <div class="d-flex justify-content-center align-items-center">
+            <button type="submit" class="m-4 btn btn-primary" id="btnSubmit">Submit</button>
+          </div>
+      </fieldset>
+  </div>
+  </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
