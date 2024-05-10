@@ -1,0 +1,32 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    background-color: #c9d6ff;
+    background: linear-gradient(to right,#e2e2e2,#c9d6ff);
+    height: 100vh;
+}
+input {
+    margin: 15px;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    border-radius:30px;
+    background-color: rgb(243, 234, 234);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.35);
+}
+.form-container {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+form button {
+    width: 20vh;
+    margin-top: 2vh;
+}

@@ -1,0 +1,12 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right,#f4ecec,#2b1f1f);
+}
+.list-group label {
+    text-align: center;
+    font-size:large;
+    font-weight: bold;
+}
