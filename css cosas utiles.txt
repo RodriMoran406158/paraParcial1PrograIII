@@ -1,0 +1,5 @@
+linear-gradient: se usa para poner en el background una transicion progresiva entre dos o mas colores.
+box-shadow: se usa para añadir efectos de sombras alrededor del marco de un elemento.
+letter-spacing: se usa para establecer el espaciado horizontal entre caracteres de un texto.
+text-transform: se usa para especificar como poner en mayuscula el texto, por ejemplo uppercase hace todo mayuscula.
+
